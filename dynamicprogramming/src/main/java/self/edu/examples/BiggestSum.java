@@ -32,6 +32,7 @@ public class BiggestSum
 //		}
 
 		System.out.println(pathFromBottom(triangle, 0, 0, cache));
+		System.out.println(pathNoRecursion(triangle));
 	}
 
 	private static int path(int[][] triangle, int i, int j, int[][] cache)
@@ -64,5 +65,20 @@ public class BiggestSum
 			cache[i][j] = triangle[i][j] + Math.max(pathFromBottom(triangle, i+1, j, cache), pathFromBottom(triangle, i+1, j+1, cache));
 		}
 		return cache[i][j];
+	}
+
+	private static int pathNoRecursion(int[][] triangle)
+	{
+		int len1 = triangle.length;
+		int len2 = triangle[len1-1].length;
+		int[][] cache = new int[len1+1][len2+1];
+		for (int i = len1 - 1; i >= 0; --i)
+		{
+			for (int j = 0; j <= i; ++j)
+			{
+				cache[i][j] = triangle[i][j] + Math.max(cache[i+1][j], cache[i+1][j+1]);
+			}
+		}
+		return cache[0][0];
 	}
 }
