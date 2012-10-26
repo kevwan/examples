@@ -12,24 +12,26 @@ public class BiggestSum
 				{ 4, 5, 2, 6, 5 }
 		};
 		int[][] cache = new int[5][5];
-		path(triangle, 4, 0, cache);
-		path(triangle, 4, 1, cache);
-		path(triangle, 4, 2, cache);
-		path(triangle, 4, 3, cache);
-		path(triangle, 4, 4, cache);
-		for (int i = 0; i < 5; ++i)
-		{
-			System.out.println(cache[4][i]);
-		}
+//		path(triangle, 4, 0, cache);
+//		path(triangle, 4, 1, cache);
+//		path(triangle, 4, 2, cache);
+//		path(triangle, 4, 3, cache);
+//		path(triangle, 4, 4, cache);
+//		for (int i = 0; i < 5; ++i)
+//		{
+//			System.out.println(cache[4][i]);
+//		}
+//
+//		for (int[] element : cache)
+//		{
+//			for (int element2 : element)
+//			{
+//				System.out.print(element2 + " ");
+//			}
+//			System.out.println();
+//		}
 
-		for (int[] element : cache)
-		{
-			for (int element2 : element)
-			{
-				System.out.print(element2 + " ");
-			}
-			System.out.println();
-		}
+		System.out.println(pathFromBottom(triangle, 0, 0, cache));
 	}
 
 	private static int path(int[][] triangle, int i, int j, int[][] cache)
@@ -48,6 +50,19 @@ public class BiggestSum
 			return cache[i][j];
 		}
 		cache[i][j] = triangle[i][j] + Math.max(path(triangle, i-1, j-1, cache), path(triangle, i-1, j, cache));
+		return cache[i][j];
+	}
+
+	private static int pathFromBottom(int[][] triangle, int i, int j, int[][] cache)
+	{
+		if (i == triangle.length - 1)
+		{
+			cache[i][j] = triangle[i][j];
+		}
+		else if (cache[i][j] == 0)
+		{
+			cache[i][j] = triangle[i][j] + Math.max(pathFromBottom(triangle, i+1, j, cache), pathFromBottom(triangle, i+1, j+1, cache));
+		}
 		return cache[i][j];
 	}
 }
